@@ -1,10 +1,13 @@
-import * as React from 'react'
-import styles from './styles.module.css'
+import React from 'react';
+import { StateProvider } from './store.js';
+import { BinanceWidgetProps } from './types';
 
-interface Props {
-  text: string
-}
+import Layout from './Layout';
 
-export const ExampleComponent = ({ text }: Props) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+const BinanceWidget: React.FunctionComponent<BinanceWidgetProps> = props => (
+    <StateProvider>
+      <Layout {...props}/>
+    </StateProvider>
+  );
+
+export default BinanceWidget;
