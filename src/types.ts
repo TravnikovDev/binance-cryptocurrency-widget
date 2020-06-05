@@ -36,7 +36,8 @@ export interface storeShape {
   sort: SORT;
   column: Columns;
   search: string;
-  pairs: any[];
+  pairs: any;
+  pairsOrder: any[];
   dispatch?: any;
 }
 

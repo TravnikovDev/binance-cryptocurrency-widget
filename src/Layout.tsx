@@ -20,27 +20,44 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 
   const context = useContext(store);
   console.log(context);
-  const { column, dispatch, pairs, search, sort, tab } = context;
+  const { column, dispatch, pairs, pairsOrder, search, sort, tab } = context;
+
+  const keyBy = (array, key) =>
+    (array || []).reduce((r, x) => ({ ...r, [key ? x[key] : x]: x }), {});
 
   const makeRequest = async () => {
     // Because API have CORS policy which doesn't include localhost
     // I've mocked API sample
-    // const response = await fetch('https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products',{
-    /* const response = await fetch('http://localhost:3003/binance');
-    const body = await response.json(); */
-    const data = await http('http://localhost:3003/binance');
+    // const data = await getData('https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products',{
+    const data = await getData('http://localhost:3003/binance');
     console.info(data);
-    dispatch({ type: 'UPDATE_SETTINGS', payload: { pairs: data } });
+    const pairs = keyBy(data, 's');
+    const pairsOrder = data.map((item) => item.s);
+    dispatch({ type: 'UPDATE_SETTINGS', payload: { pairs, pairsOrder } });
   };
 
-  async function http(request: RequestInfo): Promise<any> {
+  async function getData(request: RequestInfo): Promise<any> {
     const response = await fetch(request);
     const body = await response.json();
     return body;
   }
 
+  const connectWebSocket = () => {
+    const ws = new WebSocket(
+      'wss://stream.binance.com/stream?streams=!miniTicker@arr'
+    );
+
+    ws.onmessage = (evt: MessageEvent) => {
+      const { data } = JSON.parse(evt.data);
+      console.info(data);
+      const updates = keyBy(data, 's');
+      dispatch({ type: 'UPDATE_PAIRS', updates});
+    };
+  };
+
   useEffect(() => {
     makeRequest();
+    connectWebSocket();
   }, []);
 
   const updateValue = (name: string, val: string) =>
@@ -118,11 +135,14 @@ const Layout: React.FC<BinanceWidgetProps> = ({
           </tr>
         </thead>
         <tbody>
-          {pairs.map((pair) => (
+          {pairsOrder.map((name) => (
             <tr>
-              <td>{pair.s}</td>
-              <td>{pair.c}</td>
-              <td>{`${((pair.o - pair.c) / pair.o * 100).toFixed(2)}%`}</td>
+              <td>{pairs[name].s}</td>
+              <td>{pairs[name].c}</td>
+              <td>{`${(
+                ((pairs[name].o - pairs[name].c) / pairs[name].o) *
+                100
+              ).toFixed(2)}%`}</td>
             </tr>
           ))}
         </tbody>
