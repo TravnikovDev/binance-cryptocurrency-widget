@@ -9,7 +9,10 @@ const initialState = {
   column: Columns.Change,
   search: '',
   pairs: [],
-  dispatch: false,
+  dispatch: function(action:any) {
+      // Events not supported.
+      return undefined;
+  },
 };
 
 export const store = createContext(initialState);

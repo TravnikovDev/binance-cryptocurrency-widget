@@ -26,15 +26,21 @@ const Layout: React.FC<BinanceWidgetProps> = ({
     // Because API have CORS policy which doesn't include localhost
     // I've mocked API sample
     // const response = await fetch('https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products',{
-    const response = await fetch('http://localhost:3003/binance');
-    
-    return await response.json();
-  };
-
-  useEffect(() => {
-    const data = makeRequest();
+    /* const response = await fetch('http://localhost:3003/binance');
+    const body = await response.json(); */
+    const data = await http('http://localhost:3003/binance');
     console.info(data);
     dispatch({ type: 'UPDATE_SETTINGS', payload: { pairs: data } });
+  };
+
+  async function http(request: RequestInfo): Promise<any> {
+    const response = await fetch(request);
+    const body = await response.json();
+    return body;
+  }
+
+  useEffect(() => {
+    makeRequest();
   }, []);
 
   const updateValue = (name: string, val: string) =>
@@ -92,10 +98,16 @@ const Layout: React.FC<BinanceWidgetProps> = ({
           value={search}
           onChange={(e) => updateValue('search', e.target.value)}
         />
-        <input type="radio" name="thirdCol" id="change" value="change" checked />
-        <label htmlFor="change">Change</label>
-        <input type="radio" name="thirdCol" id="volume" value="volume"  />
-        <label htmlFor="volume">Volume</label>
+        <input
+          type='radio'
+          name='thirdCol'
+          id='change'
+          value='change'
+          checked
+        />
+        <label htmlFor='change'>Change</label>
+        <input type='radio' name='thirdCol' id='volume' value='volume' />
+        <label htmlFor='volume'>Volume</label>
       </aside>
       <table>
         <thead>
@@ -104,10 +116,15 @@ const Layout: React.FC<BinanceWidgetProps> = ({
             <th>Last price:</th>
             <th>Change:</th>
           </tr>
-         
         </thead>
         <tbody>
-          <tr><td></td><td></td><td></td></tr>
+          {pairs.map((pair) => (
+            <tr>
+              <td>{pair.s}</td>
+              <td>{pair.c}</td>
+              <td>{`${((pair.o - pair.c) / pair.o * 100).toFixed(2)}%`}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
     </main>
