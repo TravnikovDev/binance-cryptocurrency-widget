@@ -5,7 +5,7 @@ import { BinanceWidgetProps } from './types';
 import { star } from './icons';
 import styles from './styles.module.css';
 
-const Layout: React.FunctionComponent<BinanceWidgetProps> = ({
+const Layout: React.FC<BinanceWidgetProps> = ({
   title,
   height,
   width,
@@ -92,7 +92,24 @@ const Layout: React.FunctionComponent<BinanceWidgetProps> = ({
           value={search}
           onChange={(e) => updateValue('search', e.target.value)}
         />
+        <input type="radio" name="thirdCol" id="change" value="change" checked />
+        <label htmlFor="change">Change</label>
+        <input type="radio" name="thirdCol" id="volume" value="volume"  />
+        <label htmlFor="volume">Volume</label>
       </aside>
+      <table>
+        <thead>
+          <tr>
+            <th>Pair:</th>
+            <th>Last price:</th>
+            <th>Change:</th>
+          </tr>
+         
+        </thead>
+        <tbody>
+          <tr><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
     </main>
   );
 };

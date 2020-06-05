@@ -58,5 +58,7 @@
   "files": [
     "dist"
   ],
-  "dependencies": {}
+  "dependencies": {
+    "reinspect": "^1.1.0"
+  }
 }

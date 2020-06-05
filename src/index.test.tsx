@@ -1,4 +1,4 @@
-import { ExampleComponent } from '.'
+import { Layout } from '.'
 
 describe('ExampleComponent', () => {
   it('is truthy', () => {

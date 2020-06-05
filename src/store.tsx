@@ -1,5 +1,6 @@
 // store.js
-import React, { createContext, useReducer } from 'react';
+import React, { createContext } from 'react';
+import { useReducer } from "reinspect"
 import { storeShape, TABS, SORT, Columns, childProps } from './types';
 
 const initialState = {
@@ -7,14 +8,15 @@ const initialState = {
   sort: SORT.PairASC,
   column: Columns.Change,
   search: '',
-  pairs: []
+  pairs: [],
+  dispatch: false,
 };
 
-export const store = createContext<storeShape>(initialState);
+export const store = createContext(initialState);
 
 export const StateProvider: React.FC = ({ children }: childProps) => {
   const { Provider } = store;
-  const [state, dispatch] = useReducer((state: any, action: any) => {
+  const [state, dispatch] = useReducer((state: storeShape, action: any) => {
     switch (action.type) {
       case 'action description':
         // const newState = // do something with the action
@@ -25,7 +27,7 @@ export const StateProvider: React.FC = ({ children }: childProps) => {
       default:
         throw new Error();
     }
-  }, initialState);
+  }, initialState, state => state, 'Binance');
 
   return <Provider value={{ ...state, dispatch }}>{children}</Provider>;
 };
