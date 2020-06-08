@@ -58,7 +58,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 
   useEffect(() => {
     makeRequest();
-    connectWebSocket();
+    // connectWebSocket();
   }, []);
 
   const updateValue = (name: string, val: string) =>
@@ -69,26 +69,25 @@ const Layout: React.FC<BinanceWidgetProps> = ({
     const { s, c, o } = pairs[name];
 
     return (
-      <tr style={style}>
-        <td>{pairs[name].s}</td>
-        <td>{pairs[name].c}</td>
-        <td>{`${(
+      <li style={style}>
+        <div>{pairs[name].s}</div>
+        <div>{pairs[name].c}</div>
+        <div>{`${(
           ((pairs[name].o - pairs[name].c) / pairs[name].o) *
           100
-        ).toFixed(2)}%`}</td>
-      </tr>
+        ).toFixed(2)}%`}</div>
+      </li>
     );
   };
 
   return (
     <main
       style={{
-        width: `${width}px` || '150px',
-        height: `${height}px` || '300px'
+        width: width ? `${width}px` : '313px',
+        height: height ? `${height}px` : '382px'
       }}
     >
       <header>{title || 'Market'}</header>
-      <hr />
       <nav>
         <button
           className={tab === 'FAV' ? styles.active : ''}
@@ -96,6 +95,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         >
           {star}
         </button>
+        <button>Margin</button>
         <button
           className={tab === 'BNB' ? styles.active : ''}
           onClick={() => updateValue('tab', 'BNB')}
@@ -123,7 +123,6 @@ const Layout: React.FC<BinanceWidgetProps> = ({
           ))}
         </select>
       </nav>
-      <hr />
       <aside>
         <input
           type='text'
@@ -144,17 +143,18 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         <label htmlFor='volume'>Volume</label>
       </aside>
       <section>
-        <nav>
-          <a href="#">Pair:</a>
-          <a href="#">Last price:</a>
-          <a href="#">Change:</a>
-        </nav>
+        <header>
+          <a href='#'>Pair:</a>
+          <a href='#'>Last price:</a>
+          <a href='#'>Change:</a>
+        </header>
         <List
           className='List'
           height={200}
           itemCount={pairsOrder.length}
           itemSize={35}
-          width={300}
+          width={width ? `${width}px` : '313px'}
+          innerElementType="ul"
         >
           {Row}
         </List>
