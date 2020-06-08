@@ -59,6 +59,7 @@
     "dist"
   ],
   "dependencies": {
+    "react-window": "^1.8.5",
     "reinspect": "^1.1.0"
   }
 }

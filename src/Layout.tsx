@@ -1,4 +1,5 @@
 import React, { useEffect, useContext } from 'react';
+import { FixedSizeList as List } from 'react-window';
 import { store } from './store.js';
 import { ALTS, FIAT } from './contstans';
 import { BinanceWidgetProps } from './types';
@@ -51,7 +52,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
       const { data } = JSON.parse(evt.data);
       console.info(data);
       const updates = keyBy(data, 's');
-      dispatch({ type: 'UPDATE_PAIRS', updates});
+      dispatch({ type: 'UPDATE_PAIRS', updates });
     };
   };
 
@@ -62,6 +63,22 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 
   const updateValue = (name: string, val: string) =>
     dispatch({ type: 'UPDATE_SETTINGS', payload: { [name]: val } });
+
+  const Row = ({ index, style }) => {
+    const name = pairsOrder[index];
+    const { s, c, o } = pairs[name];
+
+    return (
+      <tr style={style}>
+        <td>{pairs[name].s}</td>
+        <td>{pairs[name].c}</td>
+        <td>{`${(
+          ((pairs[name].o - pairs[name].c) / pairs[name].o) *
+          100
+        ).toFixed(2)}%`}</td>
+      </tr>
+    );
+  };
 
   return (
     <main
@@ -126,7 +143,24 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         <input type='radio' name='thirdCol' id='volume' value='volume' />
         <label htmlFor='volume'>Volume</label>
       </aside>
-      <table>
+      <section>
+        <nav>
+          <a href="#">Pair:</a>
+          <a href="#">Last price:</a>
+          <a href="#">Change:</a>
+        </nav>
+        <List
+          className='List'
+          height={200}
+          itemCount={pairsOrder.length}
+          itemSize={35}
+          width={300}
+        >
+          {Row}
+        </List>
+      </section>
+
+      {/* <table>
         <thead>
           <tr>
             <th>Pair:</th>
@@ -146,7 +180,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </main>
   );
 };

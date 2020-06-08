@@ -11,7 +11,6 @@ const initialState = {
   pairs: {},
   pairsOrder: [],
   dispatch: function (action: any) {
-    // Events not supported.
     return undefined;
   }
 };
