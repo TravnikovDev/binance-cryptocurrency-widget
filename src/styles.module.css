@@ -25,13 +25,15 @@ nav button {
   white-space: nowrap;
   color: #76808F;
   font-size: 14px;
+  margin: 0 4px;
 }
-
 nav button:first-child {
   width: 25px;
-  margin-right: 10px;
+  margin-right: 8px;
 }
-
+nav button:last-child {
+  margin-right: 0;
+}
 aside {
   margin-bottom: 4px;
 }
@@ -116,6 +118,7 @@ section ul li div:last-child {
 
 .active {
   background-color: #F2F2F2;
+  font-weight: bold;
   border: none;
   outline: none;
 }

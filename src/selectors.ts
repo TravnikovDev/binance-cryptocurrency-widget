@@ -1,6 +1,6 @@
 import memoize from 'fast-memoize';
 import filter from 'lodash.filter';
-import { PairAssocArray, Pair, TABS } from './types';
+import { PairAssocArray, Pair, TABS, SORT } from './types';
 
 export const filteredPairs = (
   pairs: PairAssocArray,
@@ -17,7 +17,7 @@ export const filteredPairs = (
 
 export const filteredPairsSelector = memoize(filteredPairs);
 
-export const sortedPairs = (filteredPairsSelector, sort) => {
+export const sortedPairs = (filteredPairs: Pair[], sort: SORT): Pair[] => {
   return [];
 };
 

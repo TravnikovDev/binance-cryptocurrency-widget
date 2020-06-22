@@ -1,7 +1,7 @@
 import React, { useEffect, useContext } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { store } from './store.js';
-import { ALTS, FIAT } from './contstans';
+// import { ALTS, FIAT } from './contstans';
 import { filteredPairsSelector } from './selectors';
 import { BinanceWidgetProps } from './types';
 import { keyBy } from './utils';
@@ -102,20 +102,32 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         >
           BTC
         </button>
-        <select className={tab === 'ALTS' ? styles.active : ''}>
+        {/* <select className={tab === 'ALTS' ? styles.active : ''}>
           {ALTS.map((item: string) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
-        </select>
-        <select className={tab === 'USDⓈ' ? styles.active : ''}>
+        </select> */}
+        <button
+          className={tab === 'ALTS' ? styles.active : ''}
+          onClick={() => updateValue('tab', 'ALTS')}
+        >
+          ALTS
+        </button>
+        {/* <select className={tab === 'USDⓈ' ? styles.active : ''}>
           {FIAT.map((item: string) => (
             <option key={item} value={item}>
               {item}
             </option>
           ))}
-        </select>
+        </select> */}
+        <button
+          className={tab === 'USDⓈ' ? styles.active : ''}
+          onClick={() => updateValue('tab', 'USDⓈ')}
+        >
+          USDⓈ
+        </button>
       </nav>
       <aside>
         <input
