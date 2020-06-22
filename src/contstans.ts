@@ -1,3 +1,5 @@
+export const binanceWs = 'wss://stream.binance.com/stream?streams=!miniTicker@arr';
+
 export const ALTS = ['All', 'ETH', 'XRP', 'TRX']
 
 export const FIAT = [

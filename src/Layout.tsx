@@ -4,7 +4,8 @@ import { store } from './store.js';
 // import { ALTS, FIAT } from './contstans';
 import { filteredPairsSelector } from './selectors';
 import { BinanceWidgetProps } from './types';
-import { keyBy } from './utils';
+import { getBinanceData, connectWebSocket } from './utils';
+import { binanceWs } from './contstans';
 import { star } from './icons';
 import styles from './styles.module.css';
 
@@ -19,43 +20,12 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   const context = useContext(store);
   console.log(context);
   const { column, dispatch, pairs, pairsOrder, search, sort, tab } = context;
-
   const filteredPairs = filteredPairsSelector(pairs, tab, search);
   // console.info(filteredPairs);
 
-  const makeRequest = async () => {
-    // Because API have CORS policy which doesn't include localhost
-    // I've mocked API sample
-    // const data = await getData('https://www.binance.com/exchange-api/v1/public/asset-service/product/get-products',{
-    const data = await getData('http://localhost:3003/binance');
-    console.info(data);
-    const pairs = keyBy(data, 's');
-    const pairsOrder = data.map((item) => item.s);
-    dispatch({ type: 'UPDATE_SETTINGS', payload: { pairs, pairsOrder } });
-  };
-
-  async function getData(request: RequestInfo): Promise<any> {
-    const response = await fetch(request);
-    const body = await response.json();
-    return body;
-  }
-
-  const connectWebSocket = () => {
-    const ws = new WebSocket(
-      'wss://stream.binance.com/stream?streams=!miniTicker@arr'
-    );
-
-    ws.onmessage = (evt: MessageEvent) => {
-      const { data } = JSON.parse(evt.data);
-      console.info(data);
-      const updates = keyBy(data, 's');
-      dispatch({ type: 'UPDATE_PAIRS', updates });
-    };
-  };
-
   useEffect(() => {
-    makeRequest();
-    // connectWebSocket();
+    getBinanceData(dispatch);
+    connectWebSocket(dispatch, binanceWs);
   }, []);
 
   const updateValue = (name: string, val: string) =>
