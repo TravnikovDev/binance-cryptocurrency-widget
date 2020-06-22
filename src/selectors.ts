@@ -9,7 +9,9 @@ export const filteredPairs = (
 ): Pair[] => {
   const filtredArray = filter(pairs, (pair) => {
     const tabСondition = pair.pm === tab;
-    const searchCondition = pair.b.includes(search.toUpperCase()) || pair.q.includes(search.toUpperCase());
+    const searchCondition =
+      pair.b.includes(search.toUpperCase()) ||
+      pair.q.includes(search.toUpperCase());
     return tabСondition && searchCondition;
   });
   return filtredArray;
@@ -18,7 +20,13 @@ export const filteredPairs = (
 export const filteredPairsSelector = memoize(filteredPairs);
 
 export const sortedPairs = (filteredPairs: Pair[], sort: SORT): Pair[] => {
-  return [];
+  const clone = [...filteredPairs];
+  switch (sort) {
+    default:
+      clone.sort((a, b) => (a.s.toUpperCase() > b.s.toUpperCase() ? 1 : -1));
+      break;
+  }
+  return clone;
 };
 
 export const pairsSelector = memoize(sortedPairs);

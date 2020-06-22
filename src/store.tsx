@@ -26,9 +26,22 @@ export const StateProvider: React.FC = ({ children }: childProps) => {
           const { payload } = action;
           return { ...state, ...payload };
         case 'UPDATE_PAIRS':
+          const pairsClone = { ...state.pairs };
           const { updates } = action;
-          const pairs = { ...state.pairs, ...updates };
-          return { ...state, pairs };
+          Object.keys(updates).forEach(updatedKey => {
+            // because REST API and WebSocket have different format
+            // we updating only prices
+            const { l, o, h, c, v } = updates[updatedKey];
+            if (typeof pairsClone[updatedKey] !== 'undefined') {
+              pairsClone[updatedKey].o = parseFloat(o);
+              pairsClone[updatedKey].h = parseFloat(h);
+              pairsClone[updatedKey].l = parseFloat(l);
+              pairsClone[updatedKey].c = parseFloat(c);
+              pairsClone[updatedKey].v = parseFloat(v);
+            } // else we don't use that cracked WS messages
+          })
+          // const pairs = { ...state.pairs, ...updates };
+          return { ...state, pairs: pairsClone};
         default:
           throw new Error(`Unhandled action: ${action.type}`);
       }

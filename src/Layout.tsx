@@ -2,7 +2,7 @@ import React, { useEffect, useContext } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { store } from './store.js';
 // import { ALTS, FIAT } from './contstans';
-import { filteredPairsSelector } from './selectors';
+import { filteredPairsSelector, pairsSelector } from './selectors';
 import { BinanceWidgetProps } from './types';
 import { getBinanceData, connectWebSocket } from './utils';
 import { binanceWs } from './contstans';
@@ -18,10 +18,11 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   thirdCol
 }) => {
   const context = useContext(store);
-  console.log(context);
-  const { column, dispatch, pairs, pairsOrder, search, sort, tab } = context;
+  // console.log(context);
+  const { column, dispatch, pairs, search, sort, tab } = context;
   const filteredPairs = filteredPairsSelector(pairs, tab, search);
-  // console.info(filteredPairs);
+  const sortedPairs = pairsSelector(filteredPairs, sort);
+  console.info(filteredPairs);
 
   useEffect(() => {
     getBinanceData(dispatch);
@@ -33,7 +34,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 
   const Row = ({ index, style }) => {
     // const name = Object.keys(filteredPairs)[index];
-    const { b, q, s, c, o } = filteredPairs[index];
+    const { b, q, s, c, o } = sortedPairs[index];
 
     return (
       <li style={style}>
@@ -128,7 +129,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
           className='List'
           height={200}
           // itemCount={pairsOrder.length}
-          itemCount={filteredPairs.length}
+          itemCount={sortedPairs.length}
           itemSize={35}
           width={width ? `${width}px` : '313px'}
           innerElementType='ul'
