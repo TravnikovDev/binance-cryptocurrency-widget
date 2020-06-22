@@ -2,7 +2,9 @@ import React, { useEffect, useContext } from 'react';
 import { FixedSizeList as List } from 'react-window';
 import { store } from './store.js';
 import { ALTS, FIAT } from './contstans';
+import { filteredPairsSelector } from './selectors';
 import { BinanceWidgetProps } from './types';
+import { keyBy } from './utils';
 import { star } from './icons';
 import styles from './styles.module.css';
 
@@ -14,17 +16,12 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   defaultSort,
   thirdCol
 }) => {
-  //   const [activeTab, setActiveTab] = useState(defaultTab || 'BTC');
-  //   const [currentSort, setSort] = useState(defaultSort || 'PriceASC');
-  //   const [column, setColumn] = useState(thirdCol || 'Change');
-  //   const [query, setQuery] = useState('');
-
   const context = useContext(store);
   console.log(context);
   const { column, dispatch, pairs, pairsOrder, search, sort, tab } = context;
 
-  const keyBy = (array, key) =>
-    (array || []).reduce((r, x) => ({ ...r, [key ? x[key] : x]: x }), {});
+  const filteredPairs = filteredPairsSelector(pairs, tab, search);
+  // console.info(filteredPairs);
 
   const makeRequest = async () => {
     // Because API have CORS policy which doesn't include localhost
@@ -65,17 +62,14 @@ const Layout: React.FC<BinanceWidgetProps> = ({
     dispatch({ type: 'UPDATE_SETTINGS', payload: { [name]: val } });
 
   const Row = ({ index, style }) => {
-    const name = pairsOrder[index];
-    const { s, c, o } = pairs[name];
+    // const name = Object.keys(filteredPairs)[index];
+    const { b, q, s, c, o } = filteredPairs[index];
 
     return (
       <li style={style}>
-        <div>{pairs[name].s}</div>
-        <div>{pairs[name].c}</div>
-        <div>{`${(
-          ((pairs[name].o - pairs[name].c) / pairs[name].o) *
-          100
-        ).toFixed(2)}%`}</div>
+        <div>{`${b}/${q}`}</div>
+        <div>{c}</div>
+        <div>{`${(((o - c) / o) * 100).toFixed(2)}%`}</div>
       </li>
     );
   };
@@ -115,7 +109,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
             </option>
           ))}
         </select>
-        <select className={tab === 'FIAT' ? styles.active : ''}>
+        <select className={tab === 'USDⓈ' ? styles.active : ''}>
           {FIAT.map((item: string) => (
             <option key={item} value={item}>
               {item}
@@ -151,36 +145,15 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         <List
           className='List'
           height={200}
-          itemCount={pairsOrder.length}
+          // itemCount={pairsOrder.length}
+          itemCount={filteredPairs.length}
           itemSize={35}
           width={width ? `${width}px` : '313px'}
-          innerElementType="ul"
+          innerElementType='ul'
         >
           {Row}
         </List>
       </section>
-
-      {/* <table>
-        <thead>
-          <tr>
-            <th>Pair:</th>
-            <th>Last price:</th>
-            <th>Change:</th>
-          </tr>
-        </thead>
-        <tbody>
-          {pairsOrder.map((name) => (
-            <tr>
-              <td>{pairs[name].s}</td>
-              <td>{pairs[name].c}</td>
-              <td>{`${(
-                ((pairs[name].o - pairs[name].c) / pairs[name].o) *
-                100
-              ).toFixed(2)}%`}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table> */}
     </main>
   );
 };

@@ -3,7 +3,7 @@ import React, { createContext } from 'react';
 import { useReducer } from 'reinspect';
 import { storeShape, TABS, SORT, Columns, childProps } from './types';
 
-const initialState = {
+const initialState: storeShape = {
   tab: TABS.BTC,
   sort: SORT.PairASC,
   column: Columns.Change,
@@ -30,7 +30,7 @@ export const StateProvider: React.FC = ({ children }: childProps) => {
           const pairs = { ...state.pairs, ...updates };
           return { ...state, pairs };
         default:
-          throw new Error();
+          throw new Error(`Unhandled action: ${action.type}`);
       }
     },
     initialState,

@@ -1,13 +1,12 @@
 {
+  "root": true,
   "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
   "extends": [
-    "standard",
-    "standard-react",
-    "plugin:prettier/recommended",
-    "prettier/standard",
-    "prettier/react",
-    "plugin:@typescript-eslint/eslint-recommended",
-    "airbnb-typescript"
+    "airbnb-typescript",
+    "prettier/@typescript-eslint",
+    "plugin:react/recommended",
+    "plugin:react-hooks/recommended"
   ],
   "env": {
     "node": true

@@ -4,13 +4,14 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "binance-cryptocurrency-widget": "link:..",
     "react": "link:../node_modules/react",
     "react-dom": "link:../node_modules/react-dom",
-    "react-scripts": "link:../node_modules/react-scripts",
-    "binance-cryptocurrency-widget": "link:.."
+    "react-scripts": "link:../node_modules/react-scripts"
   },
   "scripts": {
-    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start",
+    "apiMock": "json-server --watch apiSample.json --port 3003",
+    "start": "node ../node_modules/react-scripts/bin/react-scripts.js start && apiMock",
     "build": "node ../node_modules/react-scripts/bin/react-scripts.js build",
     "test": "node ../node_modules/react-scripts/bin/react-scripts.js test",
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
@@ -23,5 +24,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "json-server": "^0.16.1"
+  }
 }
