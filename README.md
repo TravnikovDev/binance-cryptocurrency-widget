@@ -15,6 +15,10 @@ Cons:
 
 [![NPM](https://img.shields.io/npm/v/binance-cryptocurrency-widget.svg)](https://www.npmjs.com/package/binance-cryptocurrency-widget) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
+## Demo
+
+Example deployed on gh-pages https://travnikov.dev/binance-cryptocurrency-widget/
+
 ## Install
 
 ```bash
