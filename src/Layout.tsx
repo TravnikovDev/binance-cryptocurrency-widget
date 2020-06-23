@@ -3,10 +3,10 @@ import { FixedSizeList as List } from 'react-window';
 import { store } from './store.js';
 // import { ALTS, FIAT } from './contstans';
 import { filteredPairsSelector, pairsSelector } from './selectors';
-import { BinanceWidgetProps } from './types';
-import { getBinanceData, connectWebSocket } from './utils';
+import { BinanceWidgetProps, SORT } from './types';
+import { getBinanceData, connectWebSocket, pairChange } from './utils';
 import { binanceWs } from './contstans';
-import { star } from './icons';
+import { star, arrowsDefault, arrowsAsc, arrowsDsc } from './icons';
 import styles from './styles.module.css';
 
 const Layout: React.FC<BinanceWidgetProps> = ({
@@ -18,7 +18,6 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   thirdCol
 }) => {
   const context = useContext(store);
-  // console.log(context);
   const { column, dispatch, pairs, search, sort, tab } = context;
   const filteredPairs = filteredPairsSelector(pairs, tab, search);
   const sortedPairs = pairsSelector(filteredPairs, sort);
@@ -27,11 +26,22 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   // Init API on start
   useEffect(() => {
     getBinanceData(dispatch);
-    connectWebSocket(dispatch, binanceWs);
+    // connectWebSocket(dispatch, binanceWs);
   }, []);
 
   const updateValue = (name: string, val: string) =>
     dispatch({ type: 'UPDATE_SETTINGS', payload: { [name]: val } });
+
+  const arrowIcon = (sort: SORT, type: string): JSX.Element => {
+    if (sort.includes(type)) {
+      if (sort.includes('ASC')) {
+        return arrowsAsc;
+      } else if (sort.includes('DSC')) {
+        return arrowsDsc;
+      }
+    }
+    return arrowsDefault;
+  };
 
   const Row = ({ index, style }) => {
     // const name = Object.keys(filteredPairs)[index];
@@ -41,13 +51,15 @@ const Layout: React.FC<BinanceWidgetProps> = ({
       <li style={style}>
         <div>{`${b}/${q}`}</div>
         <div>{c}</div>
-        <div>{column === 'Change'? `${(((o - c) / o) * 100).toFixed(2)}%` : v}</div>
+        <div>
+          {column === 'Change' ? `${pairChange(sortedPairs[index])}%` : v}
+        </div>
       </li>
     );
   };
 
   return (
-    <main
+    <section
       style={{
         width: width ? `${width}px` : '313px',
         height: height ? `${height}px` : '382px'
@@ -128,11 +140,37 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         />
         <label htmlFor='volume'>Volume</label>
       </aside>
-      <section>
+      <div className={styles.table}>
         <header>
-          <a href='#'>Pair:</a>
-          <a href='#'>Last price:</a>
-          <a href='#'>{`${column}:`}</a>
+          <a
+            href='#'
+            onClick={() =>
+              updateValue('sort', sort === 'PairASC' ? 'PairDSC' : 'PairASC')
+            }
+          >
+            Pair: {arrowIcon(sort, 'Pair')}
+          </a>
+          <a
+            href='#'
+            onClick={() =>
+              updateValue('sort', sort === 'PriceASC' ? 'PriceDSC' : 'PriceASC')
+            }
+          >
+            Last price: {arrowIcon(sort, 'Price')}
+          </a>
+          <a
+            href='#'
+            onClick={() =>
+              updateValue(
+                'sort',
+                sort === `${column}ASC`
+                  ? `${column}DSC`
+                  : `${column}ASC`
+              )
+            }
+          >
+            {`${column}:`} {arrowIcon(sort, column)}
+          </a>
         </header>
         <List
           className='List'
@@ -145,8 +183,8 @@ const Layout: React.FC<BinanceWidgetProps> = ({
         >
           {Row}
         </List>
-      </section>
-    </main>
+      </div>
+    </section>
   );
 };
 

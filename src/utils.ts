@@ -1,3 +1,8 @@
+import { Pair } from './types';
+
+export const pairChange = (pair: Pair): number =>
+  parseFloat((((pair.o - pair.c) / pair.o) * 100).toFixed(2));
+
 export const keyBy = (array, key) =>
   (array || []).reduce((r, x) => ({ ...r, [key ? x[key] : x]: x }), {});
 
