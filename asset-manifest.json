@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/binance-cryptocurrency-widget/static/css/main.8de60091.chunk.css",
-    "main.js": "/binance-cryptocurrency-widget/static/js/main.b060b012.chunk.js",
-    "main.js.map": "/binance-cryptocurrency-widget/static/js/main.b060b012.chunk.js.map",
+    "main.js": "/binance-cryptocurrency-widget/static/js/main.0f6dd9da.chunk.js",
+    "main.js.map": "/binance-cryptocurrency-widget/static/js/main.0f6dd9da.chunk.js.map",
     "runtime-main.js": "/binance-cryptocurrency-widget/static/js/runtime-main.dd0abf62.js",
     "runtime-main.js.map": "/binance-cryptocurrency-widget/static/js/runtime-main.dd0abf62.js.map",
     "static/js/2.baead1d7.chunk.js": "/binance-cryptocurrency-widget/static/js/2.baead1d7.chunk.js",
     "static/js/2.baead1d7.chunk.js.map": "/binance-cryptocurrency-widget/static/js/2.baead1d7.chunk.js.map",
     "index.html": "/binance-cryptocurrency-widget/index.html",
-    "precache-manifest.0f9cfd0ecfc22d21a88fda60e5516b35.js": "/binance-cryptocurrency-widget/precache-manifest.0f9cfd0ecfc22d21a88fda60e5516b35.js",
+    "precache-manifest.1bc4036654866a5ea3546f81fec0abb7.js": "/binance-cryptocurrency-widget/precache-manifest.1bc4036654866a5ea3546f81fec0abb7.js",
     "service-worker.js": "/binance-cryptocurrency-widget/service-worker.js",
     "static/css/main.8de60091.chunk.css.map": "/binance-cryptocurrency-widget/static/css/main.8de60091.chunk.css.map",
     "static/js/2.baead1d7.chunk.js.LICENSE.txt": "/binance-cryptocurrency-widget/static/js/2.baead1d7.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.dd0abf62.js",
     "static/js/2.baead1d7.chunk.js",
     "static/css/main.8de60091.chunk.css",
-    "static/js/main.b060b012.chunk.js"
+    "static/js/main.0f6dd9da.chunk.js"
   ]
 }

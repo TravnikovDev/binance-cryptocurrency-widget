@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4e8492e5b1ac92cb03a0bf33690eac1d",
+    "revision": "b3735a531812eca51b1bb5f7dff3b403",
     "url": "/binance-cryptocurrency-widget/index.html"
   },
   {
-    "revision": "5d2023722c1a83411a66",
+    "revision": "cfac6dc895963f452d2a",
     "url": "/binance-cryptocurrency-widget/static/css/main.8de60091.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/binance-cryptocurrency-widget/static/js/2.baead1d7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5d2023722c1a83411a66",
-    "url": "/binance-cryptocurrency-widget/static/js/main.b060b012.chunk.js"
+    "revision": "cfac6dc895963f452d2a",
+    "url": "/binance-cryptocurrency-widget/static/js/main.0f6dd9da.chunk.js"
   },
   {
     "revision": "f78b46365319a283d73f",
