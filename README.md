@@ -5,11 +5,12 @@
 Task: https://github.com/orangeflame/binance-fe-test
 
 Pros: 
-- Made as npm package
 - Extra low size (nearly 3Kb)
 - Blazing fast
+- Made as npm package
+
 Cons: 
-- Probably cuted all extra libaries
+- Used store based on context API instead of Redux (for size purpose)
 - Lack of readability
 
 [![NPM](https://img.shields.io/npm/v/binance-cryptocurrency-widget.svg)](https://www.npmjs.com/package/binance-cryptocurrency-widget) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -25,16 +26,16 @@ npm install --save binance-cryptocurrency-widget
 ```tsx
 import React, { Component } from 'react'
 
-import MyComponent from 'binance-cryptocurrency-widget'
+import BinanceWidget from 'binance-cryptocurrency-widget'
 import 'binance-cryptocurrency-widget/dist/index.css'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <BinanceWidget />
   }
 }
 ```
 
 ## License
 
-GNU GPL v3 © [TravnikovRN](https://github.com/TravnikovRN)
+MIT © [TravnikovRN](https://github.com/TravnikovRN)
