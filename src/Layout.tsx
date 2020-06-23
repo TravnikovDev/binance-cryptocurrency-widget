@@ -19,14 +19,14 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 }) => {
   const context = useContext(store);
   const { column, dispatch, pairs, search, sort, tab, favorite } = context;
-  const filteredPairs = filteredPairsSelector(pairs, tab, search);
+  const filteredPairs = filteredPairsSelector(pairs, tab, search, favorite);
   const sortedPairs = pairsSelector(filteredPairs, sort);
   // console.info(filteredPairs);
 
   // Init API on start
   useEffect(() => {
     getBinanceData(dispatch);
-    // connectWebSocket(dispatch, binanceWs);
+    connectWebSocket(dispatch, binanceWs);
   }, []);
 
   const updateValue = (name: string, val: string) =>

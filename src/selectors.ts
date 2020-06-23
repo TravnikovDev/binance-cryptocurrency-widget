@@ -6,10 +6,11 @@ import { pairChange } from './utils';
 export const filteredPairs = (
   pairs: PairAssocArray,
   tab: TABS,
-  search: string
+  search: string,
+  favorite: string[]
 ): Pair[] => {
-  const filtredArray = filter(pairs, (pair) => {
-    const tabСondition = pair.pm === tab;
+  const filtredArray = filter(pairs, (pair: Pair): boolean => {
+    const tabСondition = tab === 'FAV'? favorite.includes(pair.s) : pair.pm === tab;
     const searchCondition =
       pair.b.includes(search.toUpperCase()) ||
       pair.q.includes(search.toUpperCase());
