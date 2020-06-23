@@ -26,7 +26,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   // Init API on start
   useEffect(() => {
     getBinanceData(dispatch);
-    // connectWebSocket(dispatch, binanceWs);
+    connectWebSocket(dispatch, binanceWs);
   }, []);
 
   const updateValue = (name: string, val: string) =>
