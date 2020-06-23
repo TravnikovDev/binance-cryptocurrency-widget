@@ -1,7 +1,16 @@
 # binance-cryptocurrency-widget
 
 > test task for Binance
+
 Task: https://github.com/orangeflame/binance-fe-test
+
+Pros: 
+- Made as npm package
+- Extra low size (nearly 3Kb)
+- Blazing fast
+Cons: 
+- Probably cuted all extra libaries
+- Lack of readability
 
 [![NPM](https://img.shields.io/npm/v/binance-cryptocurrency-widget.svg)](https://www.npmjs.com/package/binance-cryptocurrency-widget) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
