@@ -22,8 +22,9 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   const { column, dispatch, pairs, search, sort, tab } = context;
   const filteredPairs = filteredPairsSelector(pairs, tab, search);
   const sortedPairs = pairsSelector(filteredPairs, sort);
-  console.info(filteredPairs);
+  // console.info(filteredPairs);
 
+  // Init API on start
   useEffect(() => {
     getBinanceData(dispatch);
     connectWebSocket(dispatch, binanceWs);
@@ -34,13 +35,13 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 
   const Row = ({ index, style }) => {
     // const name = Object.keys(filteredPairs)[index];
-    const { b, q, s, c, o } = sortedPairs[index];
+    const { b, q, c, o, v } = sortedPairs[index];
 
     return (
       <li style={style}>
         <div>{`${b}/${q}`}</div>
         <div>{c}</div>
-        <div>{`${(((o - c) / o) * 100).toFixed(2)}%`}</div>
+        <div>{column === 'Change'? `${(((o - c) / o) * 100).toFixed(2)}%` : v}</div>
       </li>
     );
   };
@@ -113,17 +114,25 @@ const Layout: React.FC<BinanceWidgetProps> = ({
           name='thirdCol'
           id='change'
           value='change'
-          checked
+          checked={column === 'Change'}
+          onChange={(e) => updateValue('column', 'Change')}
         />
         <label htmlFor='change'>Change</label>
-        <input type='radio' name='thirdCol' id='volume' value='volume' />
+        <input
+          type='radio'
+          name='thirdCol'
+          id='volume'
+          value='volume'
+          checked={column === 'Volume'}
+          onChange={(e) => updateValue('column', 'Volume')}
+        />
         <label htmlFor='volume'>Volume</label>
       </aside>
       <section>
         <header>
           <a href='#'>Pair:</a>
           <a href='#'>Last price:</a>
-          <a href='#'>Change:</a>
+          <a href='#'>{`${column}:`}</a>
         </header>
         <List
           className='List'
