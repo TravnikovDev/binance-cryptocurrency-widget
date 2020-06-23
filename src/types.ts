@@ -85,6 +85,7 @@ export interface storeShape {
   search: string;
   pairs: PairAssocArray;
   pairsOrder: string[];
+  favorite: string[];
   dispatch?: any;
 }
 

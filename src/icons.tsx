@@ -49,8 +49,8 @@ export const arrowsAsc = (
         y2='4.594'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stop-color='#EFB80B'></stop>
-        <stop offset='1' stop-color='#FBDA3C'></stop>
+        <stop stopColor='#EFB80B'></stop>
+        <stop offset='1' stopColor='#FBDA3C'></stop>
       </linearGradient>
     </defs>
   </svg>
@@ -80,8 +80,8 @@ export const arrowsDsc = (
         y2='18.41'
         gradientUnits='userSpaceOnUse'
       >
-        <stop stop-color='#EFB80B'></stop>
-        <stop offset='1' stop-color='#FBDA3C'></stop>
+        <stop stopColor='#EFB80B'></stop>
+        <stop offset='1' stopColor='#FBDA3C'></stop>
       </linearGradient>
     </defs>
   </svg>

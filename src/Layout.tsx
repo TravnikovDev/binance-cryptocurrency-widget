@@ -18,7 +18,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   thirdCol
 }) => {
   const context = useContext(store);
-  const { column, dispatch, pairs, search, sort, tab } = context;
+  const { column, dispatch, pairs, search, sort, tab, favorite } = context;
   const filteredPairs = filteredPairsSelector(pairs, tab, search);
   const sortedPairs = pairsSelector(filteredPairs, sort);
   // console.info(filteredPairs);
@@ -26,7 +26,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
   // Init API on start
   useEffect(() => {
     getBinanceData(dispatch);
-    connectWebSocket(dispatch, binanceWs);
+    // connectWebSocket(dispatch, binanceWs);
   }, []);
 
   const updateValue = (name: string, val: string) =>
@@ -45,10 +45,16 @@ const Layout: React.FC<BinanceWidgetProps> = ({
 
   const Row = ({ index, style }) => {
     // const name = Object.keys(filteredPairs)[index];
-    const { b, q, c, o, v } = sortedPairs[index];
+    const { b, q, c, o, v, s } = sortedPairs[index];
 
     return (
       <li style={style}>
+        <div
+          className={favorite.includes(s) ? styles.active : ''}
+          onClick={() => dispatch({ type: 'TOGGLE_FAV', pairName: s })}
+        >
+          {star}
+        </div>
         <div>{`${b}/${q}`}</div>
         <div>{c}</div>
         <div>
@@ -163,9 +169,7 @@ const Layout: React.FC<BinanceWidgetProps> = ({
             onClick={() =>
               updateValue(
                 'sort',
-                sort === `${column}ASC`
-                  ? `${column}DSC`
-                  : `${column}ASC`
+                sort === `${column}ASC` ? `${column}DSC` : `${column}ASC`
               )
             }
           >

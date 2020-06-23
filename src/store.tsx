@@ -10,6 +10,7 @@ const initialState: storeShape = {
   search: '',
   pairs: {},
   pairsOrder: [],
+  favorite: [],
   dispatch: function (action: any) {
     return undefined;
   }
@@ -22,10 +23,11 @@ export const StateProvider: React.FC = ({ children }: childProps) => {
   const [state, dispatch] = useReducer(
     (state: storeShape, action: any) => {
       switch (action.type) {
-        case 'UPDATE_SETTINGS':
+        case 'UPDATE_SETTINGS': {
           const { payload } = action;
           return { ...state, ...payload };
-        case 'UPDATE_PAIRS':
+        }
+        case 'UPDATE_PAIRS': {
           const pairsClone = { ...state.pairs };
           const { updates } = action;
           Object.keys(updates).forEach(updatedKey => {
@@ -42,6 +44,17 @@ export const StateProvider: React.FC = ({ children }: childProps) => {
           })
           // const pairs = { ...state.pairs, ...updates };
           return { ...state, pairs: pairsClone};
+        }
+        case 'TOGGLE_FAV': {
+          const { pairName } = action;
+          let clone = [...state.favorite];
+          if(clone.includes(pairName)) {
+            clone = clone.filter(f => f !== pairName);
+          } else {
+            clone.push(pairName);
+          }
+          return { ...state, favorite: clone}
+        }
         default:
           throw new Error(`Unhandled action: ${action.type}`);
       }
